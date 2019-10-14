@@ -61,7 +61,7 @@ area (Circle r) = r * r * pi
 area (Square w) = w * w
 area (Rectangle w h) = w * h
 
-periphery :: Shape -> Double
-periphery (Circle r) = 2 * r * pi
-periphery (Square w) = 4 * w
-periphery (Rectangle w h) = 2 * (w + h)
+perimeter :: Shape -> Double
+perimeter (Circle r) = 2 * r * pi
+perimeter (Square w) = 4 * w
+perimeter (Rectangle w h) = 2 * (w + h)
