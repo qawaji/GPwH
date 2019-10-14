@@ -1,3 +1,7 @@
+import Cipher (
+  Cipher(encode, decode)
+  )
+
 data FourLetterAlphabet = L1 | L2 | L3 | L4 deriving (Show, Enum, Bounded)
 
 largestCharNumber :: Int
@@ -55,3 +59,9 @@ rotDecoder :: String -> String
 rotDecoder text = map rotCharDecoder text
   where alphaSize = 1 + fromEnum (maxBound :: Char)
         rotCharDecoder = rotNdecoder alphaSize
+
+data Rot = Rot
+
+instance Cipher Rot where
+  encode Rot text = rotEncoder text
+  decode Rot text = rotDecoder text
