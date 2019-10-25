@@ -22,3 +22,4 @@ cabal.project.local~
 .ghc.environment.*
 lesson21/helloPerson
 lesson21/roll
+lesson21/pizza
