@@ -37,6 +37,20 @@ randomSortSection bytes = do
   start <- randomRIO (0, bytesLength - sectionSize)
   return (sortSection start sectionSize bytes)
 
+-- 25.2
+reverseSection :: Int -> Int -> BC.ByteString -> BC.ByteString
+reverseSection start size bytes = mconcat [before,changed,after]
+  where (before,rest) = BC.splitAt start bytes
+        (target,after) = BC.splitAt size rest
+        changed = BC.reverse target
+
+randomReverseBytes :: BC.ByteString -> IO BC.ByteString
+randomReverseBytes bytes = do
+  let sectionSize = 25
+  let bytesLength = BC.length bytes
+  start <- randomRIO (0, (bytesLength - sectionSize))
+  return (reverseSection start sectionSize bytes)
+  
 main :: IO ()
 main = do
   args <- getArgs
@@ -45,10 +59,13 @@ main = do
   glitched <- foldM (\bytes func -> func bytes) imageFile 
                                                 [ randomReplaceByte,
                                                   randomSortSection,
+                                                  randomReverseBytes,
                                                   randomReplaceByte,
                                                   randomSortSection,
+                                                  randomReverseBytes,
                                                   randomReplaceByte,
-                                                  randomSortSection ]
+                                                  randomSortSection,
+                                                  randomReverseBytes ]
   let glitchedFilename = mconcat ["glitched_", filename]
   BC.writeFile glitchedFilename glitched
   print "all done."
